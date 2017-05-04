@@ -3,52 +3,7 @@
 <body>
 <div id="wrapper">
 <?php require 'common/header.php';
-class Player{
-	public $id;
-	public $name;
-	public $league;
-	public $rating;
-	public $wins;
-	public $losses;
-	public $played;
-	
-	public function winMatch($deltaR){
-		$this->rating += round($deltaR);
-		$this->played += 1;
-		$this->wins += 1;
-	}
-	
-	public function loseMatch($deltaR){
-		$this->rating -= round($deltaR);
-		$this->played += 1;
-		$this->losses += 1;
-	}
-	
-	public function drawMatch($deltaR){ //this is the only function expected to take a negative value for deltaR
-		$this->rating += round($deltaR);
-		$this->played += 1;
-	}
-	
-	//assigning values
-	public function __construct(Array $properties=array()){
-		foreach($properties as $key => $value) {
-			$this->{$key} = $value;
-		}
-	}
-	
-	//return values
-	public function info(){
-		return "<h3>" . $this->name . "</h2>" .
-		"Player id: " . $this->id . "<br>" .
-		"League: " . $this->league . "<br>" .
-		"Rating: " . $this->rating . "<br>" .
-		"Wins: " . $this->wins . "<br>" .
-		"Losses: " . $this->losses . "<br>" .
-		"Matches played: " . $this->played . "<br>";
-		
-	}
-	
-}
+
 
 function getExp(Player $a, Player $b) { //function returns probability of player A defeating player B
 	$qA = pow(10, $a->rating / 400);
@@ -61,22 +16,20 @@ function getExp(Player $a, Player $b) { //function returns probability of player
 $leagueid = $_POST["leagueid"];
 
 // set and reset variables
-$dropdownHTML = $errorMsg = $newRankA = $newRankB = "";
+$leagueName = leagueNameByid($leagueid);
+$deltaR = $nR = $dropdownHTML = $errorMsg = $newRankA = $newRankB = $messageA = $messageB = "";
 $disableForm = false;
 
 ?>
 
 
-<h2>Log Match Result</h2>
-<a>Use the form on this page to log a new match result.</a><br><br>
+<h2><?php echo $leagueName; ?></h2>
+<a>Use the form on this page to log a new match result for <?php echo $leagueName; ?></a><br><br>
 <form name="navigate" method="post">
 <button class="button-green" type="submit" formaction="selectLeague.php">Change League</button>   
 <button class="button-yellow" type="submit" formaction="addPlayer.php" name="leagueid" value=<?php echo $leagueid; ?>>New Player</button>
 </form>
 <br><br>
-<?php //used for testing 
-
-echo $leagueid;?>
 
 <form name="newMatch" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 
@@ -120,26 +73,65 @@ if (isset($_POST["processResult"])) {
 		switch ($_POST["resultSelect"]){
 			case "Player A Win":
 				$exp = getExp($playerA, $playerB);
-				$deltaR = $k * (1 - $exp);
+				$deltaR = round($k * (1 - $exp), 0);
 				$playerA->winMatch($deltaR);
 				$playerB->loseMatch($deltaR);
+				
+				$nR = $deltaR * -1;
+				$messageA = "<span class=\"winMatch\">(+" . $deltaR . ")</span>";
+				$messageB = "<span class=\"loseMatch\">(" . $nR . ")</span>";
+				
+				//prepare and bind statements to insert into result row
+				$stmtA = $conn->prepare("INSERT INTO matches (player, opponent, outcome, newrating, delta) VALUE(?, ?, 1, ?, ?)");
+				$stmtA->bind_param("iiii", $playerA->id, $playerB->id, $playerA->rating, $deltaR);
+				
+				$stmtB = $conn->prepare("INSERT INTO matches (player, opponent, outcome, newrating, delta) VALUE(?, ?, 0, ?, ?)");
+				$stmtB->bind_param("iiii", $playerB->id, $playerA->id, $playerB->rating, $nR);
+				
 				break;
 				
 			case "Player B Win":
 				$exp = getExp($playerB, $playerA);
-				$deltaR = $k * (1 - $expA);
-				$playerA->winMatch($deltaR);
-				$playerB->loseMatch($deltaR);
+				$deltaR = round($k * (1 - $exp), 0);
+				$playerB->winMatch($deltaR);
+				$playerA->loseMatch($deltaR);
+				
+				$nR = $deltaR * -1;
+				$messageB = "<span class=\"winMatch\">(+" . $deltaR . ")</span>";
+				$messageA = "<span class=\"loseMatch\">(" . $nR . ")</span>";
+				
+				//prepare and bind statements to insert into result row
+				$stmtA = $conn->prepare("INSERT INTO matches (player, opponent, outcome, newrating, delta) VALUE(?, ?, 0, ?, ?)");
+				$stmtA->bind_param("iiii", $playerA->id, $playerB->id, $playerA->rating, $nR);
+				
+				$stmtB = $conn->prepare("INSERT INTO matches (player, opponent, outcome, newrating, delta) VALUE(?, ?, 1, ?, ?)");
+				$stmtB->bind_param("iiii", $playerB->id, $playerA->id, $playerB->rating, $deltaR);
+				
 				break;
 			
 			case "Draw":
 				$expA = getExp($playerA, $playerB);
-				$deltaR = $k * (0.5 - $expA);
+				$deltaR = round($k * (0.5 - $expA));
 				$playerA->drawMatch($deltaR);
 				$playerB->drawMatch(-1 * $deltaR);
+				$messageB = "(" . round(-1 * $deltaR, 0) . ")";
+				$messageA = "(" . round($deltaR, 0) . ")";
+				
+				//prepare and bind statements to insert into result row
+				$stmtA = $conn->prepare("INSERT INTO matches (player, opponent, outcome, newrating, delta) VALUE(?, ?, 2, ?, ?)");
+				$stmtA->bind_param("iiii", $playerA->id, $playerB->id, $playerA->rating, $deltaR);
+				
+				$stmtB = $conn->prepare("INSERT INTO matches (player, opponent, outcome, newrating, delta) VALUE(?, ?, 2, ?, ?)");
+				$stmtB->bind_param("iiii", $playerB->id, $playerA->id, $playerB->rating, $deltaR);
 				
 				break;	
 		}
+		//add match results to matches row
+		$stmtA->execute();
+		$stmtA->close();
+		
+		$stmtB->execute();
+		$stmtB->close();
 		
 		//update player ratings to DB
 		// prepare and bind for player A
@@ -160,7 +152,7 @@ if (isset($_POST["processResult"])) {
 		
 		$newRankB = "New Rating: " . $playerB->rating;
 		
-		//insert row into match screen
+		//insert rows into 
 	}
 }
 
@@ -168,6 +160,7 @@ if (isset($_POST["processResult"])) {
 //define and run query of all players in this league
 $sql = "SELECT id, name FROM players WHERE league=$leagueid";
 $result = $conn->query($sql);
+$conn->close();
 
 //populate the dropdown to select player A
 if($result->num_rows > 1) {
@@ -184,7 +177,13 @@ if($result->num_rows > 1) {
 
 ?>
 <br>
-<span class="matchMsg"><?php echo $newRankA; ?></span><span class="winMatch"> (+420)</span>
+<?php  
+
+//display rank change for player A
+echo "<span class=\"matchMsg\">" . $newRankA . "</span>";
+echo "  " . $messageA;
+
+?>
 </div>
 <div class="playerBox">
 <?php 
@@ -198,7 +197,13 @@ if($result->num_rows > 0) {
 
 ?>
 <br>
-<?php echo $newRankB; ?><span class="loseMatch">-69</a>
+<?php  
+
+//display rank change for player A
+echo "<span class=\"matchMsg\">" . $newRankB . "</span>";
+echo "  " . $messageB;
+
+?>
 </div>
 
 <input type="hidden" name="leagueid" value="<?php echo $leagueid;?>"> <!-- Passes the value of the selected league  -->

@@ -102,8 +102,13 @@ a, p, div, span, h1, h2, ul {
 	font-family: 'Source Sans Pro', Verdana, Arial, sans-serif;	
 }
 
-h1, h2, ul {
+h1, h2, h3, ul {
 	color: #231f20;
+}
+
+h3 {
+	font-weight: bold;
+	font-style: italic;
 }
 
 .error {color: #FF0000;}

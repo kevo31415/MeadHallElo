@@ -27,7 +27,6 @@ Choose the league you would like to view.
  $sql = "SELECT leagues.id, leagues.name, count(*) AS 'player_count' FROM leagues, players WHERE hidden = 0 AND leagues.id = players.league GROUP BY leagues.id";
  $result = $conn->query($sql);
  
- //echo var_dump($result->fetch_assoc());
  
  if($result->num_rows > 0) {
 	 echo "<tr><th>League Name</th><th>Players</th></tr>";
