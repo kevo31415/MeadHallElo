@@ -1,0 +1,385 @@
+
+/* Affects site-wide page structure */
+#wrapper {
+    width: 960px;
+	height: 100%;
+    margin: 0 auto;
+	background-color: white;
+}
+
+body {
+	background-color: #cccccc;
+}
+
+#header {
+	background-color: white;
+	text-align: center;
+	margin: 0 auto;
+	width: 960px;
+	
+}
+
+form {
+	margin: 0 0 0 2%
+}
+	
+/* Resources for enterMatch page */
+	
+.matchMsg{
+
+}
+
+.winMatch {
+	color: #006600;
+	font-weight: bold;
+}
+
+.loseMatch {
+	color: #a10302;
+	font-weight: bold;
+}
+
+div.playerSelect{
+	position: relative;
+	width: 100%;
+	margin: 0 auto;
+}
+
+div.playerBox {
+
+	display: inline-block;
+	width: 42%;
+	margin: 1%;
+	height: 100px;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 5px;
+	border-color: #cccccc;
+	padding: 1%;
+	
+}
+
+winnerSelect {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #231f20;
+	width: 100%;
+	align-content: center;
+}
+
+
+
+.select-center {
+	width: 80%;
+	display: block;
+	margin: 0 auto;
+
+}
+
+.button-a {
+	display: inline-block;
+	margin: 0 8%;
+	background-color: white;
+	color: #a10302;
+	font-size: 1.25em;
+	border-style: solid;
+	border-color: #a10302;
+	border-width: 3px;
+	border-radius: 3px;
+	padding: 10px 20px;
+	
+}
+
+.button-a:hover {
+	background-color: #a10302;
+	color: white;
+
+}
+
+/* various buttons and messages used thoughout site */
+
+a, p, div, span, h1, h2, ul {
+	font-family: 'Source Sans Pro', Verdana, Arial, sans-serif;	
+}
+
+h1, h2, ul {
+	color: #231f20;
+}
+
+.error {color: #FF0000;}
+
+h2 {
+	width: 100%;
+	background-color: #a10302;
+	color: white;
+	padding: 5px 0;
+	font-style: italic;
+}
+
+label {
+	display: inline-block;
+	width: 15%;
+	font-weight: bold;
+}
+
+label.check {
+	display:inline;
+}
+
+/* theme color for leagues is green */
+.button-green {
+	background-color: #d1ffcd;
+	color: #006600;
+	text-decoration: none;
+	border-style: solid;
+	border-color: #006600;
+	border-width: 3px;
+	border-radius: 3px;
+	padding: 5px 12px;
+		
+}
+
+.button-green:hover {
+	background-color: #006600;
+	color: white;
+
+
+}
+
+input.league {
+	display:inline-block;
+	width: 40%;
+	padding: 6px 6px;
+	
+}
+
+input.league:focus {
+	border: 2px solid #006600;
+    border-radius: 3px;
+	
+}
+
+input.league[type=submit] {
+    width: 56%;
+    background-color: #d1ffcd;
+    color: #006600;
+	font-weight: bold;
+    padding: 14px 20px;
+    margin: 8px 0;
+	border: 3px solid #006600;
+	border-radius: 3px;
+    cursor: pointer;
+}
+
+input.league[type=submit]:hover {
+    background-color: #006600;
+	color: white;
+	margin: 8px 0;
+    display: inline-block;
+}
+
+.select-league {
+  background: none;
+  border: none;
+  color: #006600;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.1em;
+}
+
+.select-league:hover {
+  color: #333333;
+}
+
+/* theme color for managing players is yellow */
+.button-yellow {
+	background-color: #ffff99;
+	color: #b1ab00;
+	text-decoration: none;
+	border: 3px solid #b1ab00;
+	border-radius: 3px;
+	padding: 5px 12px;
+	
+}
+
+.button-yellow:hover {
+	background-color: #b1ab00;
+	color: white;
+
+}
+
+input.player {
+	width: 40%;
+	padding: 6px 6px;
+	
+}
+
+input.player:focus {
+	border: 2px solid #b1ab00;
+    border-radius: 3px;
+	
+}
+
+input.player[type=submit] {
+    width: 56%;
+    background-color: #ffff99;
+    color: #b1ab00;
+	font-weight: bold;
+    padding: 14px 20px;
+    margin: 8px 0;
+	border: 3px solid #b1ab00;
+	border-radius: 3px;
+    cursor: pointer;
+}
+
+input.player[type=submit]:hover {
+    background-color: #b1ab00;
+	color: white;
+	margin: 8px 0;
+    display: inline-block;
+}
+
+/* The color of other buttons, usually back buttons, is gray */
+
+
+button.other, input.other[type=submit] {
+    width: 56%;
+    background-color: white;
+    color: #231f20;
+	font-weight: bold;
+    padding: 14px 20px;
+    margin: 8px 0;
+	border: 3px solid #231f20;
+	border-radius: 3px;
+    cursor: pointer;
+}
+
+button.other:hover, input.other[type=submit]:hover {
+	background-color: #cccccc;
+	margin: 8px 0;
+    display: inline-block;
+
+}
+
+.notice {
+	color: #FF0000;
+	font-weight: bold;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted #231f20;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 240px;
+    background-color: #231f20;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 110%;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #231f20 transparent transparent;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+/* Tables */
+
+table {
+    width: 56%;
+}
+
+td {
+	text-align: center;
+}
+
+th:nth-child(1), td:nth-child(1) {
+	text-align: left;
+}
+
+/* View Player Screen */
+
+#infoTable {
+	border-bottom: 1px solid #cccccc;
+	width: 100%;
+	border-collapse: collapse;
+	table-layout:fixed;
+	
+}
+
+#infoTable tr, #infoTable td {
+	text-align: left;
+}
+
+#infoTable td:first-child {
+	font-weight: bold;
+	font-style: italic;
+	font-size: 1.25em;
+}
+
+#infoTable th:last-child, #infoTable td:last-child { /* Cell with win percentage */
+	text-align: right;
+}
+
+#infoTable tr:nth-child(1) { /* Header row */
+	background-color: #a10302;
+	color: white;
+	font-weight: bold;
+	font-style: italic;
+}
+
+#infoTable th { /* Ranking and win pct labels */
+	width: 20%;
+}
+
+#infoTable th:nth-child(1) { /* Cell with player name */
+	font-size: 1.5em;
+	padding: 5px 0;
+	width: 60%;
+}
+
+#matchHistory {
+	width: 96%;
+	margin: 2%;
+	border-collapse: collapse;
+	border: 1px solid #231f20;
+	table-layout:fixed;
+	text-align: center;
+}
+
+#matchHistory td, #matchHistory th {
+	text-align: center;
+}
+
+
+#matchHistory th {
+	background-color: #a10302;
+	color: white;
+}
+
+#matchHistory tr:hover {
+	background-color: #eeeeee;
+}
+
+
+
+
+
+
