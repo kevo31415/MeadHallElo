@@ -9,7 +9,7 @@ require 'common/header.php';
 
 
 //intake variable and reset variables
-$playerid = 10;
+$playerid = $_POST["id"];
 $wld = ""; //this variable makes the W and L different colors in the match history table
 
 //get values to populate infotable
@@ -21,15 +21,21 @@ $conn->close();
 $player = new Player($result);
 
 $leagueName = leagueNameByid($player->league);
-$playerWinPct = round($player->wins / $player->played * 100, 1);
 $playerDrawn = $player->played - $player->wins - $player->losses;
+
+//win percentage
+if ($player->played == 0) {
+	$playerWinPct = 0;
+} else {
+	$playerWinPct = round($player->wins / $player->played * 100, 1);
+}
 
 ?>
 
 <table id="infoTable">
-<tr><th><?php echo $player->name; ?></th><th>Elo Rating</th><th>Win Percentage</th></tr>
-<tr><td><?php echo $leagueName; ?></td><td style="font-size: 2em;"><?php echo $player->rating; ?></td><td style="font-size: 2em;"><?php echo $playerWinPct; ?>%</td></tr>
-<tr><td></td><td></td><td><?php echo $player->wins; ?><span class="winMatch">W</span> | <?php echo $player->losses; ?><span class="loseMatch">L</span> | <?php echo $playerDrawn; ?>D</td></tr>
+<tr><th class="left"><?php echo $player->name; ?></th><th class="left">Elo Rating</th><th class="right">Win Percentage</th></tr>
+<tr><td class="left"><?php echo $leagueName; ?></td><td class="left" style="font-size: 2em;"><?php echo $player->rating; ?></td><td class="right" style="font-size: 2em;"><?php echo $playerWinPct; ?>%</td></tr>
+<tr><td></td><td></td><td class="right"><?php echo $player->wins; ?><span class="winMatch">W</span> | <?php echo $player->losses; ?><span class="loseMatch">L</span> | <?php echo $playerDrawn; ?>D</td></tr>
 </table>
 
 <br><br>
@@ -97,11 +103,19 @@ if ($result->num_rows > 0) {
 		}
 	}
  else {
-	echo "No matches found for this player.";
+	echo "<th>No matches found for this player.</th>";
 }
 ?>
 
 </table>
+
+<form name="navigate" method="post" action="viewLeague.php">
+
+<button class="other" type="submit" name="leagueid" value=<?php echo $player->league; ?>>Go Back</button>
+
+</form>
+
+
 </div>
 </body>
 

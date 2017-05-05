@@ -1,63 +1,50 @@
 <html>
 <head>
-<style>
-<!-- yeah I'm using an internal stylesheet for the home page, bite me -->
 
-a {text-decoration: none;}
-
-#rankings {
-	width: 50%;
-	font-weight: bold;
-	text-align: center;
-    padding: 14px 20px;
-    margin: 3px auto;
-	font-size: 1.1em;
-	border: 3px solid;
-	border-radius: 3px;
-    cursor: pointer;
-	background-color: white;
-	color: #a10302;
-	border-color: #a10302;
-}
-
-#rankings:hover {
-	background-color: #a10302;
-	color: white;
-}
-
-#admin {
-	width: 50%;
-	font-weight: bold;
-	text-align: center;
-    padding: 14px 20px;
-    margin: 3px auto;
-	font-size: 1.1em;
-	border: 3px solid;
-	border-radius: 3px;
-    cursor: pointer;
-	background-color: #ffff99;
-	color: #b1ab00;
-	border-color: #b1ab00;
-}
-
-#admin:hover {
-	background-color: #b1ab00;
-	color: white;
-	border-color: #b1ab00;
-}
-
-</style>
 </head>
 <body>
 <div id="wrapper">
-<?php include 'common/header.php';?>
+<?php
+require 'common/header.php';
 
-
-
-
-<a><div id="rankings">View rankings</div></a>
+?>
+<h2>Home Page</h2>
 <br>
-<a href="selectLeague.php"><div id="admin">Admin</div></a>
+<p>
+Welcome to the Mead Hall Elo rating site. Here you can check player Elo ratings for selected competitions at Mead Hall. Select a league to view below.
+</p>
+
+<table>
+<form method="post">
+ <?php
+
+ //create and check connection
+ require 'common/connectToDB.php';
+ 
+ //define and run query of all leagues
+ $sql = "SELECT leagues.id, leagues.name, count(*) AS 'player_count' FROM leagues, players WHERE hidden = 0 AND leagues.id = players.league GROUP BY leagues.id";
+ $result = $conn->query($sql);
+ 
+ 
+ if($result->num_rows > 0) {
+	 echo "<tr><th>League Name</th><th>Players</th></tr>";
+	 //output the data of each row
+	 while($row = $result->fetch_assoc()) {
+		 echo "<tr><td><button class=\"select-league\" type=\"submit\" formaction=\"viewLeague.php\" name=\"leagueid\" value=" . $row["id"] . ">" . $row["name"] . "</button></td>"; //creates links to each league rankings page
+		 echo "<td>" . $row["player_count"] . "</td></tr>"; //prints the number of players in each row
+	 }
+ } else {
+	 echo "No leagues found. Please have your TO set up a league to continue.";
+ }
+ 
+ $conn->close();
+
+ 
+?>
+</form>
+</table>
+
 </div>
 </body>
+
 </html>

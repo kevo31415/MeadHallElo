@@ -4,7 +4,8 @@
 </head>
 <body>
 <div id="wrapper">
-<?php require 'common/header.php';
+<?php
+require 'common/admin.php';
 
 function getLeagueNameById($leagueid) {
 	require 'common/connectToDB.php';
@@ -75,7 +76,7 @@ if (isset($_POST["submit"])) {
 ?>
 
 <h2>Add New Player</h2>
-<a>To add a player to <?php echo getLeagueNameById($leagueid);?>, enter their name below.</a><br><br>
+<p>To add a player to <?php echo getLeagueNameById($leagueid);?>, enter their name below.</p><br><br>
 
 <form name="newPlayer" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 <label for="playerName">Player Name:</label>
@@ -91,7 +92,7 @@ if (isset($_POST["submit"])) {
 </form>
 
 <br>
-<?php echo $playerAddedMsg; ?>
+<p><?php echo $playerAddedMsg; ?></p>
 
 </div>
 </body>

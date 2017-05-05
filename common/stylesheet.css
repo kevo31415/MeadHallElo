@@ -9,6 +9,7 @@
 
 body {
 	background-color: #cccccc;
+	margin: 0;
 }
 
 #header {
@@ -102,14 +103,19 @@ a, p, div, span, h1, h2, ul {
 	font-family: 'Source Sans Pro', Verdana, Arial, sans-serif;	
 }
 
-h1, h2, h3, ul {
+h1, h2, h3, ul, p {
 	color: #231f20;
+}
+
+h3, ul, p {
+	margin: 2%;
 }
 
 h3 {
 	font-weight: bold;
 	font-style: italic;
 }
+
 
 .error {color: #FF0000;}
 
@@ -140,8 +146,7 @@ label.check {
 	border-color: #006600;
 	border-width: 3px;
 	border-radius: 3px;
-	padding: 5px 12px;
-		
+	padding: 5px 12px;	
 }
 
 .button-green:hover {
@@ -204,7 +209,7 @@ input.league[type=submit]:hover {
 	border: 3px solid #b1ab00;
 	border-radius: 3px;
 	padding: 5px 12px;
-	
+	margin: 2%;	
 }
 
 .button-yellow:hover {
@@ -244,6 +249,19 @@ input.player[type=submit]:hover {
     display: inline-block;
 }
 
+.select-player {
+  background: none;
+  border: none;
+  color: #231f20;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.select-player:hover {
+	text-decoration: underline;
+}
+
 /* The color of other buttons, usually back buttons, is gray */
 
 
@@ -253,7 +271,6 @@ button.other, input.other[type=submit] {
     color: #231f20;
 	font-weight: bold;
     padding: 14px 20px;
-    margin: 8px 0;
 	border: 3px solid #231f20;
 	border-radius: 3px;
     cursor: pointer;
@@ -261,8 +278,7 @@ button.other, input.other[type=submit] {
 
 button.other:hover, input.other[type=submit]:hover {
 	background-color: #cccccc;
-	margin: 8px 0;
-    display: inline-block;
+	display: inline-block;
 
 }
 
@@ -308,30 +324,47 @@ button.other:hover, input.other[type=submit]:hover {
 /* Tables */
 
 table {
-    width: 56%;
+    width: 70%;
+	border-collapse: collapse;
+	border: 1px solid #231f20;
+	table-layout:fixed;
+	text-align: center;
+	margin: 2%;
 }
 
-td {
+td, th {
 	text-align: center;
 }
 
-th:nth-child(1), td:nth-child(1) {
+th {
+	background-color: #a10302;
+	color: white;
+}
+
+tr:hover {
+	background-color: #eeeeee;
+}
+
+
+th.left, td.left {
 	text-align: left;
+	padding: 0 4px;
+}
+
+th.right, td.right {
+	text-align: right;
 }
 
 /* View Player Screen */
 
 #infoTable {
-	border-bottom: 1px solid #cccccc;
+	text-align: center;
 	width: 100%;
-	border-collapse: collapse;
-	table-layout:fixed;
-	
+	margin: 0 0 0 0;
+	border-style: none;
+	border-bottom: 1px solid #cccccc;
 }
 
-#infoTable tr, #infoTable td {
-	text-align: left;
-}
 
 #infoTable td:first-child {
 	font-weight: bold;
@@ -339,8 +372,8 @@ th:nth-child(1), td:nth-child(1) {
 	font-size: 1.25em;
 }
 
-#infoTable th:last-child, #infoTable td:last-child { /* Cell with win percentage */
-	text-align: right;
+#infoTable tr { 
+	background-color: white;
 }
 
 #infoTable tr:nth-child(1) { /* Header row */
@@ -350,38 +383,26 @@ th:nth-child(1), td:nth-child(1) {
 	font-style: italic;
 }
 
+
+
 #infoTable th { /* Ranking and win pct labels */
 	width: 20%;
 }
 
 #infoTable th:nth-child(1) { /* Cell with player name */
 	font-size: 1.5em;
-	padding: 5px 0;
+	padding: 5px 4px;
 	width: 60%;
 }
 
 #matchHistory {
 	width: 96%;
-	margin: 2%;
-	border-collapse: collapse;
-	border: 1px solid #231f20;
-	table-layout:fixed;
-	text-align: center;
-}
-
-#matchHistory td, #matchHistory th {
-	text-align: center;
 }
 
 
-#matchHistory th {
-	background-color: #a10302;
-	color: white;
-}
 
-#matchHistory tr:hover {
-	background-color: #eeeeee;
-}
+
+
 
 
 

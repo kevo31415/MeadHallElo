@@ -5,7 +5,7 @@
 <body>
 <div id="wrapper">
 <?php
-require 'common/header.php';
+require 'common/admin.php';
 
 //sets initial variables
 $nameErr = $ratingErr = $kError = "";
@@ -18,7 +18,7 @@ $rating = $kvalue = $formOK = $hide = 0;
 
 <h2>Edit League</h2>
 
-<a>Edit league details below</a><br><br>
+<p>Change league settings below.</p><br>
 
  <?php
  
@@ -68,7 +68,7 @@ $rating = $kvalue = $formOK = $hide = 0;
 		  $nameCheck = $conn->query($sql);
 		  
 		  if ($nameCheck->num_rows > 0){
-			  echo "A league with that name already exists.";
+			  $nameErr = "A league with that name already exists.";
 		  } else {
 			  
 		  // prepare and bind
@@ -135,7 +135,7 @@ $conn->close();
 
 <input class="league" type="submit" value="Save Changes">
 <br>
-<input class="back" type="submit" formaction="selectLeague.php" value="Go Back">
+<input class="other" type="submit" formaction="selectLeague.php" value="Go Back">
 </form>
 <span class="notice"><?php echo $updatedMsg;?></span></br>
 

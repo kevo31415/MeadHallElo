@@ -6,10 +6,10 @@
 <div id="wrapper">
 
 <?php
-require 'common/header.php';
+require 'common/admin.php';
 
 //tests the form for errors
-$nameErr = $ratingErr = $kError = "";
+$nameErr = $ratingErr = $kError = $leagueCreated = "";
 $name = "";
 $rating = $kvalue = $formOK = 0;
 
@@ -36,15 +36,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
   
   // $formOK is the number of fields that are valid
-
-
+//all verification passes
+  if ($formOK == 3){
+	  // create and check connection
+	  require 'common/connectToDB.php';
+	  
+	  // check for duplicate league names
+	  $sql = "SELECT * FROM leagues WHERE name = '$name'";
+	  $nameCheck = $conn->query($sql);
+	  
+	  if ($nameCheck->num_rows > 0){
+		  $nameErr = "A league with that name already exists.";
+	  } else {
+	  // prepare and bind
+	  $stmt = $conn->prepare("INSERT INTO leagues (name, starting_rating, k_value) VALUE(?, ?, ?)");
+	  $stmt->bind_param("sii", $name, $rating, $kvalue);
+	  
+	  //execute
+	  $stmt->execute();
+	  $stmt->close();
+	  
+	  $leagueCreated = "<strong>New league created successfully</strong> <br>" . $name . 
+	  "<br>Starting Elo rating: " . $rating . 
+	  "<br>K value: " . $kvalue;
+	  
+	  	  }
+		  
+	  
+	  $conn->close();
+  }
  }
 
  
 ?>
 
 <h2>Add New League</h2>
-<a>Please fill out the following form to add a new league.</a><br><br>
+<p>Please fill out the following form to add a new league.</p><br>
 
 <form name="newLeague" method="post">
 <label for="leagueName">League Name:</label>
@@ -67,38 +94,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <input class="other" type="submit" formaction="selectLeague.php" value="Go Back">
 </form>
 
+<p><?php echo $leagueCreated; ?></p>
 
- <?php
-  //all verification passes
-  if ($formOK == 3){
-	  // create and check connection
-	  require 'common/connectToDB.php';
-	  
-	  // check for duplicate league names
-	  $sql = "SELECT * FROM leagues WHERE name = '$name'";
-	  $nameCheck = $conn->query($sql);
-	  
-	  if ($nameCheck->num_rows > 0){
-		  echo "A league with that name already exists.";
-	  } else {
-	  // prepare and bind
-	  $stmt = $conn->prepare("INSERT INTO leagues (name, starting_rating, k_value) VALUE(?, ?, ?)");
-	  $stmt->bind_param("sii", $name, $rating, $kvalue);
-	  
-	  //execute
-	  $stmt->execute();
-	  $stmt->close();
-	  
-	  echo "<strong>New league created successfully</strong> <br>";
-	  echo $name .
-		"<br>Starting Elo rating: " . $rating .
-		"<br>K value: " . $kvalue;
-	  	  }
-		  
-	  
-	  $conn->close();
-  } 
-?>
 
 </div>
 </body>

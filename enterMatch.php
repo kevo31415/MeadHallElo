@@ -2,7 +2,8 @@
 
 <body>
 <div id="wrapper">
-<?php require 'common/header.php';
+<?php 
+require 'common/admin.php';
 
 
 function getExp(Player $a, Player $b) { //function returns probability of player A defeating player B
@@ -24,12 +25,11 @@ $disableForm = false;
 
 
 <h2><?php echo $leagueName; ?></h2>
-<a>Use the form on this page to log a new match result for <?php echo $leagueName; ?></a><br><br>
+<p>Use the form on this page to log a new match result for <?php echo $leagueName; ?>.</p>
 <form name="navigate" method="post">
 <button class="button-green" type="submit" formaction="selectLeague.php">Change League</button>   
 <button class="button-yellow" type="submit" formaction="addPlayer.php" name="leagueid" value=<?php echo $leagueid; ?>>New Player</button>
 </form>
-<br><br>
 
 <form name="newMatch" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 

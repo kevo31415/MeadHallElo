@@ -6,17 +6,11 @@
 <div id="wrapper">
 <?php
 require 'common/header.php';
-require 'common/connectToDB.php';
-$sql = "SELECT id, name FROM players WHERE league = 1";
-
-$result = $conn->query($sql);
-
-while ($row = $result->fetch_assoc()){
-	$playerNames[$row["id"]] = $row["name"];
-}
-
 
 ?>
+<h2> This is a test </h2>
+<p> Hello World </p>
+
 </div>
 </body>
 </html>

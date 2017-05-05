@@ -24,6 +24,7 @@ echo "<h2>$leagueName Rankings</h2>"
 <br><br>
 
 <table>
+<form method="post"> 
  <?php
  
  //define and run query of players in this league
@@ -33,10 +34,10 @@ echo "<h2>$leagueName Rankings</h2>"
  //echo var_dump($result->fetch_assoc());
  
  if($result->num_rows > 0) {
-	 echo "<tr><th>Player Name</th><th>Rating</th><th>Wins</th><th>Losses</th><th>Played</th></tr>"; //table header
+	 echo "<tr><th class=\"left\">Player Name</th><th>Rating</th><th>Wins</th><th>Losses</th><th>Played</th></tr>"; //table header
 	 //output the data of each row
 	 while($row = $result->fetch_assoc()) {
-		 echo "<tr><td><a>" . $row["name"] . "</a></td>"; //player name and link to player page (GET)
+		 echo "<tr><td class=\"left\"><button class=\"select-player\" type=\"submit\" formaction=\"viewPlayer.php\" name=\"id\" value=" . $row["id"] . ">" . $row["name"] . "</button></td>"; //player name and post to player page
 		 echo "<td>" . $row["rating"] . "</td>"; //player rating
 		 echo "<td>" . $row["wins"] . "</td>"; //player wins
 		 echo "<td>" . $row["losses"] . "</td>"; //player losses
@@ -51,9 +52,16 @@ echo "<h2>$leagueName Rankings</h2>"
 
  
 ?>
+</form>
 </table>
-<br><br>
-<a href="selectLeagueView.php"><button>Go Back</button></a>
+<br>
+
+<form name="navigate" method="post" action="homePage.php">
+
+<button class="other" type="submit">Go Back</button>
+
+</form>
+
 </div>
 </body>
 
