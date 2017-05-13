@@ -30,6 +30,9 @@ if (isset($_POST["submit"])) {
   if (empty($_POST["playerName"])) {
     $nameErr = "Please enter a name for this player.";
 	
+  } elseif (strlen($_POST["playerName"]) > 16) { //name field no longer than 16
+	$nameErr = "Name must not exceed character limit of 16.";
+	  
   } else {
     	
 	//flow if valid name is provided

@@ -41,7 +41,7 @@ if ($player->played == 0) {
 <br><br>
 
 <h3>Match History (last 90 days)</h3>
-<table id="matchHistory" >
+<table>
 
 <?php
 

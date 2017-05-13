@@ -324,7 +324,7 @@ button.other:hover, input.other[type=submit]:hover {
 /* Tables */
 
 table {
-    width: 70%;
+    width: 96%;
 	border-collapse: collapse;
 	border: 1px solid #231f20;
 	table-layout:fixed;
@@ -395,9 +395,6 @@ th.right, td.right {
 	width: 60%;
 }
 
-#matchHistory {
-	width: 96%;
-}
 
 
 
