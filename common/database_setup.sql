@@ -1,5 +1,7 @@
 -- Create database
-CREATE DATABASE EloDB
+CREATE DATABASE elodb
+
+--user: animemar_elodbm pw: MeadElo456
 
 -- Create tables
 

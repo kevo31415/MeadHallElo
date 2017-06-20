@@ -9,7 +9,7 @@
 
 <body>
 	<div id="header">
-		<a href="homePage.php"><img src="images/meadhall_logo.png" height="200"></a>
+		<a href="index.php"><img src="images/meadhall_logo.png" height="200"></a>
 		<br>
 		<h1>Mead Hall Elo Tracker</h1>
 	</div>

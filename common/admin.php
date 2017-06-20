@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 if ($_SESSION["isLogged"]) {
 	require 'common/header.php';
 } else {
