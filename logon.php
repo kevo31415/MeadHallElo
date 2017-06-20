@@ -1,3 +1,5 @@
+<?php session_start();?>
+
 <html>
 <head>
 
@@ -7,13 +9,11 @@
 <?php
 require 'common/header.php';
 
-//echo md5("testingf320odfse4k4");
-session_start();
 $_SESSION["isLogged"] = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$saltString = $_POST["text"]."f320odfse4k4";
-	if (md5($saltString) == "198e39b84a4982360cec5dc1bd9d05d1"){
+	if (md5($saltString) == "264a0cc785be879c1534829c011cbc55"){
 		$_SESSION["isLogged"] = true;
 	}
 }

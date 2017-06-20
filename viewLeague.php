@@ -56,7 +56,7 @@ echo "<h2>$leagueName Rankings</h2>"
 </table>
 <br>
 
-<form name="navigate" method="post" action="homePage.php">
+<form name="navigate" method="post" action="index.php">
 
 <button class="other" type="submit">Go Back</button>
 
